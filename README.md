@@ -1,8 +1,161 @@
-# Vue 3 + TypeScript + Vite
+# Code Review - 代码审查工具
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+---
 
 # 本项目由阿里云ESA提供加速、计算和保护
 ![阿里云ESA](https://img.alicdn.com/imgextra/i3/O1CN01H1UU3i1Cti9lYtFrs_!!6000000000139-2-tps-7534-844.png)
+
+一个基于 Vue 3 的在线代码审查工具，支持多种编程语言的代码质量检测，提供实时问题高亮和修改建议。
+
+![Vue](https://img.shields.io/badge/Vue-3.4-4FC08D?style=flat-square&logo=vue.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?style=flat-square&logo=typescript)
+![Vite](https://img.shields.io/badge/Vite-5.2-646CFF?style=flat-square&logo=vite)
+![Monaco Editor](https://img.shields.io/badge/Monaco_Editor-0.47-007ACC?style=flat-square)
+
+## 功能特性
+
+### 🌐 多语言支持
+- **JavaScript** - ES6+ 语法检测、console/debugger 检测、var 声明警告等
+- **TypeScript** - 包含 JS 规则 + any 类型、非空断言、@ts-ignore 检测
+- **Python** - PEP 8 风格检查、eval/exec 安全警告、可变默认参数检测
+- **Java** - System.out 检测、空 catch 块、字符串比较问题等
+- **Go** - panic 使用、错误处理检查、未初始化 map 检测
+
+### 🔍 检测能力
+| 类别 | 说明 |
+|------|------|
+| 命名规范 | camelCase、PascalCase、snake_case 等命名风格检查 |
+| 语法问题 | 基础语法错误和不推荐的语法使用 |
+| 代码风格 | 缩进、空格、行长度、console 语句等 |
+| 逻辑问题 | 空 catch 块、重复分支、未使用变量等 |
+| 性能问题 | 不必要的对象创建、魔法数字等 |
+| 安全问题 | eval 使用、硬编码密码/密钥等 |
+
+### ✨ 用户体验
+- **Monaco Editor** - VS Code 同款编辑器，支持语法高亮和智能提示
+- **实时高亮** - 问题代码行红色波浪线标记
+- **悬停提示** - 鼠标悬停显示问题详情和修改建议
+- **点击跳转** - 点击问题列表项自动跳转到对应代码行
+- **过滤筛选** - 按错误、警告、提示级别筛选问题
+
+## 技术栈
+
+- **前端框架**: Vue 3 + Composition API
+- **开发语言**: TypeScript
+- **构建工具**: Vite
+- **代码编辑器**: Monaco Editor
+- **样式方案**: CSS Variables + 原生 CSS
+
+## 项目结构
+
+```
+code-review-app/
+├── src/
+│   ├── App.vue                     # 主应用组件
+│   ├── main.ts                     # 入口文件
+│   ├── types/
+│   │   └── index.ts                # TypeScript 类型定义
+│   ├── styles/
+│   │   └── main.css                # 全局样式与设计系统
+│   ├── directives/
+│   │   └── clickOutside.ts         # 点击外部指令
+│   ├── components/
+│   │   ├── CodeEditor.vue          # Monaco 编辑器封装
+│   │   ├── LanguageSelect.vue      # 语言选择器
+│   │   ├── ReviewReport.vue        # 检测报告面板
+│   │   └── IssueItem.vue           # 问题条目组件
+│   ├── composables/
+│   │   └── useCodeAnalyzer.ts      # 代码分析逻辑
+│   └── utils/
+│       ├── linters/
+│       │   ├── javascript.ts       # JS/TS 检测规则
+│       │   ├── python.ts           # Python 检测规则
+│       │   ├── java.ts             # Java 检测规则
+│       │   └── go.ts               # Go 检测规则
+│       └── rules/
+│           └── naming.ts           # 命名规范规则
+├── index.html
+├── package.json
+├── vite.config.ts
+└── tsconfig.json
+```
+
+## 快速开始
+
+### 安装依赖
+
+```bash
+npm install
+```
+
+### 启动开发服务器
+
+```bash
+npm run dev
+```
+
+访问 http://localhost:5173 查看应用。
+
+### 构建生产版本
+
+```bash
+npm run build
+```
+
+## 使用说明
+
+1. **选择语言** - 在顶部下拉菜单中选择代码语言
+2. **输入代码** - 在左侧编辑器中粘贴或输入代码（也可点击"加载示例"）
+3. **开始检测** - 点击"开始检测"按钮进行代码分析
+4. **查看结果** - 右侧面板显示检测报告和问题列表
+5. **定位问题** - 点击问题条目可跳转到对应代码行
+
+## 设计规范
+
+### 配色方案
+
+| 用途 | 颜色值 | 说明 |
+|------|--------|------|
+| 主色 | `#2563EB` | 品牌蓝 |
+| 强调色 | `#3B82F6` | 交互元素 |
+| 成功 | `#10B981` | 检测通过 |
+| 警告 | `#F59E0B` | 警告级别 |
+| 错误 | `#EF4444` | 错误级别 |
+
+### UI 特征
+
+- 大圆角设计 (16px - 24px)
+- 柔和阴影过渡
+- 毛玻璃效果
+- 微交互动画
+- 响应式布局
+
+## 扩展开发
+
+### 添加新的检测规则
+
+在 `src/utils/linters/` 目录下对应语言文件中添加规则：
+
+```typescript
+{
+  pattern: /your-regex-pattern/g,
+  message: () => '问题描述',
+  severity: 'warning' as const,
+  type: 'style' as const,
+  rule: 'rule-name',
+  suggestion: '修改建议',
+}
+```
+
+### 添加新语言支持
+
+1. 在 `src/types/index.ts` 的 `SupportedLanguage` 中添加语言
+2. 在 `src/utils/linters/` 下创建对应的检测文件
+3. 在 `src/utils/rules/naming.ts` 中添加命名规范
+4. 在 `src/composables/useCodeAnalyzer.ts` 中注册 linter
+5. 在 `src/components/LanguageSelect.vue` 中添加语言选项
+
+## 许可证
+
+MIT License
+
